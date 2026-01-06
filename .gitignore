@@ -1,0 +1,6 @@
+# Hidden
+.vs
+.git
+
+# Folders
+build/

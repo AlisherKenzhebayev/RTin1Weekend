@@ -45,6 +45,10 @@ jobs:
             c_compiler: cl
 
     steps:
+    - uses: actions/checkout@v6.0.1
+      with:
+        submodules: 'true'
+        token: ${{ github.token }}
     - uses: actions/checkout@v4
 
     - name: Set reusable strings

@@ -2,5 +2,6 @@
 .vs
 .git
 
-# Folders
+#Folders 
 build/
+output/

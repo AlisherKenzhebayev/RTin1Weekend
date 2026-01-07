@@ -5,3 +5,6 @@
 #Folders 
 build/
 output/
+
+#Files
+trace_output.*

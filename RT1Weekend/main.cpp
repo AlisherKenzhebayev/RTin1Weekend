@@ -4,8 +4,10 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image.h>
 #include <stb_image_write.h>
+#include <vector>
 
-#define N_CHANNELS 3
+#include "vec3.h"
+#include "color.h"
 
 using namespace std;
 
@@ -18,30 +20,33 @@ int main()
 
 	cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
-	uint8_t data[image_width * image_height * N_CHANNELS];
+	int data_length = image_width * image_height * N_CHANNELS;
+	uint8_t* data = new uint8_t[data_length];
 
-	int index = 0;
-	for (int j = 0; j < image_height; j++)
+	try
 	{
-		clog << "\rScanlines remaining: " << (image_height - j) << ' ' << flush;
-		for (int i = 0; i < image_width; i++)
+		int index = 0;
+
+		for (int j = 0; j < image_height; j++)
 		{
-			auto r = double(i) / (image_width - 1);
-			auto g = double(j) / (image_height - 1);
-			auto b = 0.0;
+			clog << "\rScanlines remaining: " << (image_height - j) << ' ' << flush;
+			for (int i = 0; i < image_width; i++)
+			{
+				auto pixel_color = color(double(i) / (image_width - 1), double(j) / (image_height - 1), 0);
 
-			int ir = int(255.999 * r);
-			int ig = int(255.999 * g);
-			int ib = int(255.999 * b);
-
-			data[index]		= ir;
-			data[index + 1]	= ig;
-			data[index + 2]	= ib;
-			index += N_CHANNELS;
+				write_color(data, data_length, pixel_color, index);
+				index += N_CHANNELS;
+			}
 		}
 	}
+	catch (const std::exception& e)
+	{
+		cout << "Exception - " << e.what() << "\n";
+	}
 
-	stbi_write_jpg("output/image_out.jpg", image_width, image_height, N_CHANNELS, data, 100);
-	std::clog << "\rDone.                 \n";
+	stbi_write_jpg("trace_output.jpg", image_width, image_height, N_CHANNELS, data, 100);
+	clog << "\rDone.                 \n";
+
+	delete[] data;
 	return 0;
 }

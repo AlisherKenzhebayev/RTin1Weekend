@@ -3,7 +3,7 @@
 #
 
 # Add source to this project's executable.
-add_executable (RT1Weekend "main.cpp" "main.h" "vec3.h" "color.h" "ray.h")
+add_executable (RT1Weekend "main.cpp" "main.h" "vec3.h" "color.h" "ray.h" "hittable.h" "sphere.h" "hittable_list.h" "rtweekend.h")
 
 message(STATUS "asD ${CMAKE_SOURCE_DIR}")
 

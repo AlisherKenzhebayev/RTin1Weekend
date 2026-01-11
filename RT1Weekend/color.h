@@ -4,7 +4,6 @@
 #define N_CHANNELS 3
 
 #include "vec3.h"
-#include <iostream>
 #include <stdint.h>
 
 using color = vec3;
